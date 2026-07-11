@@ -1,3 +1,7 @@
 # Variables d'environnement
 .env
 
+# Le cache
+__pycache__/
+*.pyc
+
