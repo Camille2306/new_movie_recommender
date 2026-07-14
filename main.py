@@ -1,6 +1,8 @@
 import os
 import requests
 from dotenv import load_dotenv
+from questionnaire import Questionnaire
+
 
 load_dotenv()
 
@@ -16,4 +18,15 @@ params = {
 
 response = requests.get(url, params=params)
 
-print(response.json())
+
+
+
+questionnaire = Questionnaire()
+
+answers = questionnaire.run()
+
+print("\nRéponses de l'utilisateur :")
+
+for key, value in answers.items():
+    print(f"{key} : {value}")
+
