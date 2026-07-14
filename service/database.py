@@ -1,0 +1,68 @@
+import sqlite3
+
+
+
+DATABASE_NAME = "data/movies.db"
+
+#fonction qui permet de se connecter à la base de données SQLite
+def connect():
+
+    return sqlite3.connect(DATABASE_NAME)
+
+#fonction qui permet de créer les tables dans la base de données SQLite
+def create_tables(connection):
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+
+    CREATE TABLE IF NOT EXISTS movies(
+
+        id INTEGER PRIMARY KEY,
+
+        title TEXT,
+
+        runtime INTEGER,
+
+        release_date TEXT,
+
+        language TEXT,
+
+        popularity REAL,
+
+        vote_average REAL,
+
+        vote_count INTEGER
+
+    )
+
+    """)
+
+    connection.commit()
+
+
+#fonction qui permet d'insérer un film dans la base de données SQLite
+def insert_movie(connection, movie):
+
+    cursor = connection.cursor()
+
+    cursor.execute("""
+
+    INSERT OR REPLACE INTO movies
+
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+
+    """, (
+
+        movie["id"],
+        movie["title"],
+        movie["runtime"],
+        movie["release_date"],
+        movie["original_language"],
+        movie["popularity"],
+        movie["vote_average"],
+        movie["vote_count"]
+
+    ))
+
+    connection.commit()
