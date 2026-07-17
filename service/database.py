@@ -1,3 +1,8 @@
+#Ce fichier construit la structure de la base de données SQLite 
+#et insère les films récupérés via l'API, en choisissant les données
+#récupérées qui sont pertinentes pour le projet. Il est utilisé 
+#par le fichier importer.py
+
 import sqlite3
 
 

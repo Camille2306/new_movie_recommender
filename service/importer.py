@@ -1,6 +1,11 @@
+#ce fichier fait le lien entre le fichier qui récupère les infos API 
+# et celui qui construit la base de données.
+
+#le fichier qui permet de récupérer toutes les infos des films via l'API
 from api_client import discover_movies
 from api_client import get_movie_details
 
+#le fichier qui permet de gérer la base de données SQLite
 from database import connect
 from database import create_tables
 from database import insert_movie
