@@ -7,7 +7,7 @@ import sqlite3
 
 
 
-DATABASE_NAME = "data/movies.db"
+DATABASE_NAME = "data/moviestest.db"
 
 #fonction qui permet de se connecter à la base de données SQLite
 def connect():
@@ -26,6 +26,8 @@ def create_tables(connection):
         id INTEGER PRIMARY KEY,
 
         title TEXT,
+
+        genres TEXT,
 
         runtime INTEGER,
 
@@ -55,12 +57,13 @@ def insert_movie(connection, movie):
 
     INSERT OR REPLACE INTO movies
 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
 
     """, (
 
         movie["id"],
         movie["title"],
+        ", ".join(g["name"] for g in movie["genres"]),
         movie["runtime"],
         movie["release_date"],
         movie["original_language"],
