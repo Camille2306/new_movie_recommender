@@ -1,5 +1,9 @@
 from dataclasses import dataclass
 import numpy as np
+from service.film import MovieProfile
+from service.questionnaire import UserProfile
+
+
 
 
 # ======================================================================
@@ -31,38 +35,6 @@ ALL_GENRES = [
 
 
 # ======================================================================
-# Modèles
-# ======================================================================
-
-@dataclass
-class UserProfile:
-
-    max_runtime: int
-
-    target_year: int
-
-    sigma_year: int
-
-    genres: list[str]
-
-    language: str
-
-
-@dataclass
-class Movie:
-
-    title: str
-
-    genres: list[str]
-
-    runtime: int
-
-    release_year: int
-
-    language: str
-
-
-# ======================================================================
 # Similarité cosinus
 # ======================================================================
 
@@ -91,7 +63,7 @@ def cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:
     return float(np.dot(v1, v2) / (norm1 * norm2))
 
 
-def genre_score(user: UserProfile, movie: Movie) -> float:
+def genre_score(user: UserProfile, movie: MovieProfile) -> float:
     """
     Score de similarité des genres.
     """
@@ -106,7 +78,7 @@ def genre_score(user: UserProfile, movie: Movie) -> float:
 # Durée
 # ======================================================================
 
-def runtime_score(user: UserProfile, movie: Movie) -> float:
+def runtime_score(user: UserProfile, movie: MovieProfile) -> float:
     """
     1 si le film est plus court que la durée maximale souhaitée.
 
@@ -125,7 +97,7 @@ def runtime_score(user: UserProfile, movie: Movie) -> float:
 # Année
 # ======================================================================
 
-def year_score(user: UserProfile, movie: Movie) -> float:
+def year_score(user: UserProfile, movie: MovieProfile) -> float:
     """
     Score gaussien autour de l'année souhaitée.
     """
@@ -144,7 +116,7 @@ def year_score(user: UserProfile, movie: Movie) -> float:
 # Langue
 # ======================================================================
 
-def language_score(user: UserProfile, movie: Movie) -> float:
+def language_score(user: UserProfile, movie: MovieProfile) -> float:
     """
     1 si la langue correspond.
     """
@@ -173,7 +145,7 @@ WEIGHTS = {
 # Score global
 # ======================================================================
 
-def movie_score(user: UserProfile, movie: Movie):
+def movie_score(user: UserProfile, movie: MovieProfile):
     """
     Calcule le score global d'un film.
 
@@ -212,13 +184,13 @@ if __name__ == "__main__":
 
     user = UserProfile(
         max_runtime=75,
-        target_year=2020,
+        target_year=2000,
         sigma_year=12,
         genres=["Romantique"],
         language="fr",
     )
 
-    movie = Movie(
+    movie = MovieProfile(
         title="Le Monde de Nemo",
         genres=["Animation", "Familial", "Aventure"],
         runtime=101,
