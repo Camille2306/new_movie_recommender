@@ -70,7 +70,6 @@ def save_scores(db_path, results):
 
 
 
-
 if __name__ == "__main__":
 
     from service.questionnaire import UserProfile
