@@ -1,9 +1,7 @@
-import requests
-
 import os
 import requests
 from dotenv import load_dotenv
-from questionnaire import Questionnaire
+from service.questionnaire import Questionnaire
 
 
 load_dotenv()
