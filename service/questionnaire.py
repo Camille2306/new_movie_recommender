@@ -93,16 +93,25 @@ class Questionnaire:
         self.answers["genres"] = self.ask_multiple_choice(
             "Quels genres aimez-vous ?",
             [
-                "Romantique",
-                "Horreur",
-                "Comédie musicale",
-                "Science-fiction",
                 "Action",
-                "Réflexion",
-                "Historique",
-                "Comédie",
-                "Documentaire",
+                "Aventure",
                 "Animation",
+                "Comédie",
+                "Crime",
+                "Documentaire",
+                "Drame",
+                "Familial",
+                "Fantastique",
+                "Histoire",
+                "Horreur",
+                "Musique",
+                "Mystère",
+                "Romantique",
+                "Science-Fiction",
+                "Téléfilm",
+                "Thriller",
+                "Guerre",
+                "Western",
                 "Peu importe"
             ]
         )

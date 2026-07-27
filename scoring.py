@@ -38,10 +38,12 @@ ALL_GENRES = [
 # Similarité cosinus
 # ======================================================================
 
+"""
+
 def genre_vector(genres: list[str]) -> np.ndarray:
-    """
-    Convertit une liste de genres en vecteur binaire.
-    """
+    
+    #Convertit une liste de genres en vecteur binaire.
+    
 
     return np.array(
         [1 if genre in genres else 0 for genre in ALL_GENRES],
@@ -50,9 +52,9 @@ def genre_vector(genres: list[str]) -> np.ndarray:
 
 
 def cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:
-    """
-    Similarité cosinus entre deux vecteurs.
-    """
+    
+    #Similarité cosinus entre deux vecteurs.
+    
 
     norm1 = np.linalg.norm(v1)
     norm2 = np.linalg.norm(v2)
@@ -63,15 +65,29 @@ def cosine_similarity(v1: np.ndarray, v2: np.ndarray) -> float:
     return float(np.dot(v1, v2) / (norm1 * norm2))
 
 
-def genre_score(user: UserProfile, movie: MovieProfile) -> float:
-    """
-    Score de similarité des genres.
-    """
+def genre_score2(user: UserProfile, movie: MovieProfile) -> float:
+    
+    #Score de similarité des genres.
+    
 
     u = genre_vector(user.genres)
     m = genre_vector(movie.genres)
 
     return cosine_similarity(u, m)
+
+
+"""
+
+def genre_score(user: UserProfile, movie: MovieProfile) -> float:
+    # Ensembles pour accélérer les recherches
+    user_genres = {genre.lower() for genre in user.genres}
+    movie_genres = {genre.lower() for genre in movie.genres}
+        
+    # Nombre de genres communs
+    common = len(user_genres & movie_genres)
+
+    # Pourcentage des préférences de l'utilisateur satisfaites
+    return common / len(user_genres)
 
 
 # ======================================================================
@@ -121,8 +137,11 @@ def year_score(user: UserProfile, movie: MovieProfile) -> float:
 
 def language_score(user: UserProfile, movie: MovieProfile) -> float:
     """
-    1 si la langue correspond.
+    1 si la langue correspond ou si l'utilisateur n'a pas de préférence.
     """
+
+    if user.language is None:
+        return 1.0
 
     return float(
         user.language.lower() == movie.language.lower()
@@ -135,9 +154,11 @@ def language_score(user: UserProfile, movie: MovieProfile) -> float:
 
 WEIGHTS = {
 
-    "runtime": 0.20,
+    "genre": 0.50,
+    
+    "runtime": 0.25,
 
-    "year": 0.25,
+    "year": 0.15,
 
     "language": 0.10,
 
@@ -180,7 +201,7 @@ def movie_score(user: UserProfile, movie: MovieProfile):
 
 
 
-
+"""
 # Exemple
 
 if __name__ == "__main__":
@@ -212,4 +233,4 @@ if __name__ == "__main__":
     print("Détail :")
 
     for key, value in details.items():
-        print(f"{key:10s}: {value:.3f}")
+        print(f"{key:10s}: {value:.3f}")"""

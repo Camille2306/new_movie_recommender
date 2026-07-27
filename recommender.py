@@ -7,11 +7,16 @@ from scoring import movie_score
 
 def build_movie_profile(row):
 
+    genres = []
+
+    if row["genres"]:
+        genres = [g.strip() for g in row["genres"].split(",")]
+
     return MovieProfile(
         title=row["title"],
         runtime=row["runtime"],
         release_year=row["year"],
-        genres=row["genres"],
+        genres=genres,
         language=row["language"],
     )
 
