@@ -10,6 +10,8 @@ API_KEY = os.getenv("TMDB_API_KEY")
 BASE_URL = os.getenv("TMDB_BASE_URL")
 
 
+
+
 def discover_movies(page):
 
     url = f"{BASE_URL}/discover/movie"
