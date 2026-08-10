@@ -4,6 +4,8 @@
 #le fichier qui permet de récupérer toutes les infos des films via l'API
 from service.api_client import discover_movies
 from service.api_client import get_movie_details
+from service.api_client import get_movie_keywords
+
 
 #le fichier qui permet de gérer la base de données SQLite
 from service.database import connect
@@ -50,7 +52,9 @@ def import_movies():
 
             details = get_movie_details(movie["id"])
 
-            insert_movie(connection, details)
+            keywords = get_movie_keywords(movie["id"])
+
+            insert_movie(connection, details, keywords)
 
     connection.close()
 

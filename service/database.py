@@ -29,6 +29,8 @@ def create_tables(connection):
 
         genres TEXT,
 
+        keywords TEXT,
+
         runtime INTEGER,
 
         release_date TEXT,
@@ -41,7 +43,22 @@ def create_tables(connection):
 
         vote_average REAL,
 
-        vote_count INTEGER
+        vote_count INTEGER,
+
+        budget INTEGER,
+
+        revenue INTEGER,
+
+        production_companies TEXT,
+
+        production_countries TEXT,
+
+        overview TEXT,
+
+        poster_path TEXT,
+
+        backdrop_path TEXT
+
 
     )
 
@@ -84,7 +101,7 @@ def has_latin_title(title):
 
 
 #fonction qui permet d'insérer un film dans la base de données SQLite
-def insert_movie(connection, movie):
+def insert_movie(connection, movie, keywords):
 
     # On ignore les films pour adultes
     if movie.get("adult", False):
@@ -111,20 +128,28 @@ def insert_movie(connection, movie):
 
     INSERT OR REPLACE INTO movies
 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 
     """, (
 
         movie["id"],
         movie["title"],
         ", ".join(g["name"] for g in movie["genres"]),
+        ", ".join(k["name"] for k in keywords["keywords"]),
         movie["runtime"],
         movie["release_date"],
         year,
         movie["original_language"],
         movie["popularity"],
         movie["vote_average"],
-        movie["vote_count"]
+        movie["vote_count"],
+        movie["budget"],
+        movie["revenue"],
+        ", ".join(c["name"] for c in movie["production_companies"]),
+        ", ".join(c["name"] for c in movie["production_countries"]),
+        movie["overview"],
+        movie["poster_path"],
+        movie["backdrop_path"]
 
     ))
 
